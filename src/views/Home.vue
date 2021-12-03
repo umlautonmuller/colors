@@ -1,20 +1,43 @@
 <template>
   <section class="home">
     <header>
-      <icon-button @click.native="randomize" icon="dice"></icon-button>
-      <icon-button @click.native="increment" icon="plus"></icon-button>
-      <icon-button @click.native="clear" icon="redo"></icon-button>
+      <icon-button
+        :color="'#303030'"
+        :colorHover="'#CCCCCC'"
+        @click.native="randomize"
+        icon="dice"
+      ></icon-button>
+      <icon-button
+        :color="'#303030'"
+        :colorHover="'#CCCCCC'"
+        @click.native="increment"
+        icon="plus"
+      ></icon-button>
+      <icon-button
+        :color="'#303030'"
+        :colorHover="'#CCCCCC'"
+        @click.native="clear"
+        icon="redo"
+      ></icon-button>
     </header>
-    <div>
-      <v-color :id="id" @close="deleteColumn" v-for="id of palette.colors" :key="id" ref="columns"/>
-    </div>
+    <transition-group name="list" tag="div">
+      <v-color
+        :id="id"
+        @close="deleteColumn"
+        @lock="sendToFront"
+        v-for="id of palette.colors"
+        :key="id"
+        ref="columns"
+        :canClose="canClose"
+      />
+    </transition-group>
   </section>
 </template>
 
 <script>
 import Vue from "vue";
 import Color from "@/components/Color.vue";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export default Vue.extend({
   name: "Home",
@@ -28,22 +51,25 @@ export default Vue.extend({
         originals: [],
         size: 5,
       },
+      lockedColumn: [undefined],
     };
   },
   methods: {
     increment() {
-      this.palette.size++;
-      this.palette.colors.push(uuidv4())
+      if (this.palette.size < 8) {
+        this.palette.size++;
+        this.palette.colors.push(uuidv4());
+      }
     },
     decrement() {
       this.palette.size--;
     },
     clear() {
       const locked = this.$refs.columns.filter((component) => component.locked);
-      
+
       this.palette.colors = locked.map((component) => component.id);
 
-      while(this.palette.colors.length < 5) {
+      while (this.palette.colors.length < 5) {
         this.palette.colors.push(uuidv4());
       }
 
@@ -53,14 +79,32 @@ export default Vue.extend({
       this.$refs.columns.map((component) => component.randomize());
     },
     deleteColumn(id) {
-      this.palette.size--;
-      const position = this.palette.colors.indexOf(id)
-      this.palette.colors.splice(position, 1)
+      if (this.palette.size > 3) {
+        this.decrement()
+        const position = this.palette.colors.indexOf(id);
+        this.palette.colors.splice(position, 1);
+      }
+    },
+    sendToFront(id) {
+      const position = this.palette.colors.indexOf(id);
+      this.lockedColumn = this.palette.colors.splice(position, 1)
+      this.palette.colors.unshift(this.lockedColumn[0])
+    },
+  },
+  computed: {
+    canClose: function () {
+      if (this.palette.size <= 3) {
+        return false
+      } else {
+        return true
+      }
     }
   },
   created() {
-    this.palette.colors = Array.from({length: this.palette.size}, () => uuidv4())
-  }
+    this.palette.colors = Array.from({ length: this.palette.size }, () =>
+      uuidv4()
+    );
+  },
 });
 </script>
 
@@ -83,10 +127,22 @@ section.home {
   }
 
   > div {
-    flex-grow: 8;
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: stretch;
+    overflow: hidden;
   }
+}
+
+.list-move {
+  transition: transform 1s;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: flex-grow 0.5s;
+}
+.list-enter, .list-leave-active  /* .list-leave-active below version 2.1.8 */ {
+  flex-grow: 0;
 }
 </style>
