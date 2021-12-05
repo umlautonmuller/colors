@@ -90,6 +90,11 @@ export default Vue.extend({
       this.lockedColumn = this.palette.colors.splice(position, 1)
       this.palette.colors.unshift(this.lockedColumn[0])
     },
+    keyDownHandler(e) {
+      if (e.code === "Space") {
+        this.randomize()
+      }
+    }
   },
   computed: {
     canClose: function () {
@@ -105,6 +110,9 @@ export default Vue.extend({
       uuidv4()
     );
   },
+  mounted() {
+    window.addEventListener('keydown', this.keyDownHandler);
+  }
 });
 </script>
 

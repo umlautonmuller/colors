@@ -166,7 +166,7 @@ export default Vue.extend({
   }
   > input {
     border: none;
-    margin: 80px 0px;
+    margin-bottom: 80px;
     width: 100%;
     text-align: center;
     border-radius: 10px;
