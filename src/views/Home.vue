@@ -19,6 +19,12 @@
         @click.native="clear"
         icon="redo"
       ></icon-button>
+      <icon-button
+        :color="'#303030'"
+        :colorHover="'#CCCCCC'"
+        @click.native="unlockAll"
+        icon="lock-open"
+      ></icon-button>
     </header>
     <transition-group name="list" tag="div">
       <v-color
@@ -53,7 +59,7 @@ export default Vue.extend({
       },
       lockedColumn: [undefined],
     };
-  },
+  }, 
   methods: {
     increment() {
       if (this.palette.size < 8) {
@@ -93,6 +99,13 @@ export default Vue.extend({
     keyDownHandler(e) {
       if (e.code === "Space") {
         this.randomize()
+      }
+    },
+    unlockAll() {
+      for (let i = 0; i < this.palette.colors.length; i++) {
+        if (this.$refs.columns[i].locked === true) {
+          this.$refs.columns[i].locked = false;
+        }
       }
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div
     class="color-column"
-    :style="{ backgroundColor: color }"
+    :style="{ backgroundColor: color, flexGrow: flexGrowSize}"
     v-on:mouseover="hover = true"
     v-on:mouseleave="hover = false"
   >
@@ -62,6 +62,7 @@ export default Vue.extend({
       bright: false,
       locked: false,
       hover: false,
+      flexGrowSize: 1,
     };
   },
   props: {
@@ -71,7 +72,7 @@ export default Vue.extend({
     canClose: {
       type: Boolean,
       default: true,
-    }
+    },
   },
   methods: {
     getRandomHex() {
@@ -131,6 +132,13 @@ export default Vue.extend({
         this.backgroundColor = this.darken();
       }
     },
+    hover() {
+      if (this.hover) {
+        this.flexGrowSize = 1.1;
+      } else {
+        this.flexGrowSize = 1;
+      }
+    },
   },
   created() {
     this.randomize();
@@ -153,6 +161,7 @@ export default Vue.extend({
   justify-content: flex-end;
   width: 0px;
   transition: width 1s ease-in-out;
+  transition: flex-grow 0.1s ease-out;
 
   .toolbar {
     display: flex;
