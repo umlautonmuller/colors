@@ -1,7 +1,7 @@
 <template>
   <div
-    class="color-column"
-    :style="{ backgroundColor: color, flexGrow: flexGrowSize}"
+    :class="{ 'color-column': true }"
+    :style="{ backgroundColor: color }"
     v-on:mouseover="hover = true"
     v-on:mouseleave="hover = false"
   >
@@ -62,7 +62,6 @@ export default Vue.extend({
       bright: false,
       locked: false,
       hover: false,
-      flexGrowSize: 1,
     };
   },
   props: {
@@ -98,7 +97,7 @@ export default Vue.extend({
     lock() {
       this.locked = !this.locked;
       if (this.locked === true) {
-        this.$emit('lock', this.id)
+        this.$emit("lock", this.id);
       }
     },
     copy() {
@@ -132,19 +131,12 @@ export default Vue.extend({
         this.backgroundColor = this.darken();
       }
     },
-    hover() {
-      if (this.hover) {
-        this.flexGrowSize = 1.1;
-      } else {
-        this.flexGrowSize = 1;
-      }
-    },
   },
   created() {
     this.randomize();
   },
   beforeDestroy() {
-    this.$refs.toolbar.remove();  
+    this.$refs.toolbar.remove();
   },
   updated() {
     this.checkLuminance();
@@ -161,7 +153,7 @@ export default Vue.extend({
   justify-content: flex-end;
   width: 0px;
   transition: width 1s ease-in-out;
-  transition: flex-grow 0.1s ease-out;
+  transition: transform 0.1s ease-out;
 
   .toolbar {
     display: flex;

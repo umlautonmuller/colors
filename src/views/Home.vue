@@ -25,7 +25,19 @@
         @click.native="unlockAll"
         icon="lock-open"
       ></icon-button>
+
+      <div class="user-buttons" v-if="!$store.state.user.logged">
+        <button id="login" @click="showLogin = true">Log In</button>
+        <button id="signup">Sign Up</button>
+      </div>
+      <div class="user-buttons" v-else>
+        <div>Olá, {{$store.state.user.user.name}} </div>
+        <button id="logout" @click="$store.commit('user/logout')">Logout</button>
+      </div>
     </header>
+
+    <v-login-form :show="showLogin" @close="showLogin = false" />
+
     <transition-group name="list" tag="div">
       <v-color
         :id="id"
@@ -44,11 +56,15 @@
 import Vue from "vue";
 import Color from "@/components/Color.vue";
 import { v4 as uuidv4 } from "uuid";
+import IconButton from "@/components/ui/IconButton.vue";
+import LoginForm from "@/components/ui/LoginForm.vue";
 
 export default Vue.extend({
   name: "Home",
   components: {
     "v-color": Color,
+    "v-login-form": LoginForm,
+    IconButton,
   },
   data() {
     return {
@@ -58,8 +74,9 @@ export default Vue.extend({
         size: 5,
       },
       lockedColumn: [undefined],
+      showLogin: false,
     };
-  }, 
+  },
   methods: {
     increment() {
       if (this.palette.size < 8) {
@@ -86,19 +103,19 @@ export default Vue.extend({
     },
     deleteColumn(id) {
       if (this.palette.size > 3) {
-        this.decrement()
+        this.decrement();
         const position = this.palette.colors.indexOf(id);
         this.palette.colors.splice(position, 1);
       }
     },
     sendToFront(id) {
       const position = this.palette.colors.indexOf(id);
-      this.lockedColumn = this.palette.colors.splice(position, 1)
-      this.palette.colors.unshift(this.lockedColumn[0])
+      this.lockedColumn = this.palette.colors.splice(position, 1);
+      this.palette.colors.unshift(this.lockedColumn[0]);
     },
     keyDownHandler(e) {
       if (e.code === "Space") {
-        this.randomize()
+        this.randomize();
       }
     },
     unlockAll() {
@@ -107,16 +124,16 @@ export default Vue.extend({
           this.$refs.columns[i].locked = false;
         }
       }
-    }
+    },
   },
   computed: {
     canClose: function () {
       if (this.palette.size <= 3) {
-        return false
+        return false;
       } else {
-        return true
+        return true;
       }
-    }
+    },
   },
   created() {
     this.palette.colors = Array.from({ length: this.palette.size }, () =>
@@ -124,8 +141,8 @@ export default Vue.extend({
     );
   },
   mounted() {
-    window.addEventListener('keydown', this.keyDownHandler);
-  }
+    window.addEventListener("keydown", this.keyDownHandler);
+  },
 });
 </script>
 
@@ -141,9 +158,39 @@ section.home {
     height: 100px;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    position: relative;
 
     > button {
       margin: 0 10px;
+    }
+
+    > .user-buttons {
+      position: absolute;
+      right: 0;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+
+      > button {
+        margin: 0 20px;
+        padding: 15px;
+        background-color: white;
+        color: #303030;
+        font-weight: bold;
+        letter-spacing: 0.05em;
+        border: 2px solid #303030;
+        border-radius: 5px;
+        text-transform: uppercase;
+        transition: 0.3s ease;
+      }
+
+      > button:hover {
+        border: 2px solid #303030;
+        border-radius: 10px;
+        background-color: #303030;
+        color: #cccccc;
+      }
     }
   }
 
