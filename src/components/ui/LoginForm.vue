@@ -51,7 +51,7 @@ export default Vue.extend({
         const user = dataResponse.data;
 
         this.$store.commit("user/set", user);
-        this.close()
+        this.close();
       } catch (error) {
         alert(error.response.data.message);
       }

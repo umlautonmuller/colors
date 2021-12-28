@@ -1,8 +1,23 @@
 <template>
-  <div id="app">
+  <v-app>
+    <app-bar/>
+    <snack-bar/>
     <router-view />
-  </div>
+  </v-app>
 </template>
+
+<script>
+import Vue from 'vue';
+import AppBar from '@/components/ui/AppBar.vue';
+import SnackBar from '@/components/ui/SnackBar.vue';
+
+export default Vue.extend({
+  components: {
+    AppBar,
+    SnackBar,
+  }
+});
+</script>
 
 <style lang="scss">
 * {

@@ -60,13 +60,16 @@ export default Vue.extend({
       foregroundColor: undefined,
       backgroundColor: undefined,
       bright: false,
-      locked: false,
       hover: false,
     };
   },
   props: {
     id: {
       type: String,
+    },
+    locked: {
+      type: Boolean,
+      default: false
     },
     canClose: {
       type: Boolean,
@@ -90,19 +93,16 @@ export default Vue.extend({
     },
     close() {
       this.$emit("close", this.id);
-
-      //this.$destroy()
-      //this.$el.remove()
     },
-    lock() {
-      this.locked = !this.locked;
-      if (this.locked === true) {
+    async lock() {
+      const locked = await this.$store.dispatch("palette/toggleLockById", this.id);
+      if (locked === true) {
         this.$emit("lock", this.id);
       }
     },
     copy() {
-      console.log(window.navigator.clipboard);
       window.navigator.clipboard.writeText(this.color);
+      this.$store.commit('snackbar/show', {message: "Copied!", color: this.color, timeout: 2000})
     },
     updateColor(newColor) {
       this.color = newColor;

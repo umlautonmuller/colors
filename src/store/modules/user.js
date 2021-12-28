@@ -3,7 +3,7 @@ const module = {
   namespaced: true,
   state: () => ({
     user: undefined,
-    logged: false
+    logged: false,
   }),
   mutations: {
     set(state, user) {
@@ -14,7 +14,7 @@ const module = {
       state.user = undefined;
       state.logged = false;
       localStorage.removeItem("colors.token");
-    }
+    },
   },
 };
 
