@@ -1,14 +1,12 @@
 <template>
   <section class="home">
-    <v-login-form :show="showLogin" @close="showLogin = false" />
-
     <transition-group name="list" tag="div">
       <v-color
         :id="id"
         :locked="locked"
         @close="$store.dispatch('palette/deleteColorById', id)"
         @lock="$store.dispatch('palette/sendToFront', id)"
-        v-for="{id, locked} of $store.state.palette.colors"
+        v-for="{ id, locked } of $store.state.palette.colors"
         :key="id"
         ref="columns"
         :canClose="canClose"
@@ -20,18 +18,11 @@
 <script>
 import Vue from "vue";
 import Color from "@/components/Color.vue";
-import LoginForm from "@/components/ui/LoginForm.vue";
 
 export default Vue.extend({
   name: "Home",
   components: {
     "v-color": Color,
-    "v-login-form": LoginForm,
-  },
-  data() {
-    return {
-      showLogin: false,
-    };
   },
   methods: {
     keyDownHandler(e) {

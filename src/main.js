@@ -5,7 +5,7 @@ import store from "./store";
 import "./plugins/font-awesome";
 import "./plugins/ui-kit";
 import vuetify from "./plugins/vuetify";
-import './assets/styles/app.scss';
+import "./assets/styles/app.scss";
 
 Vue.config.productionTip = false;
 

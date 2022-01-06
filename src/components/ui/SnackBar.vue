@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
 
-export default Vue.extend ({
+export default Vue.extend({
   computed: {
     snackbar() {
       return this.$store.state.snackbar;
-    }
-  }
-})
+    },
+  },
+});
 </script>

@@ -1,21 +1,21 @@
 <template>
   <v-app>
-    <app-bar/>
-    <snack-bar/>
+    <app-bar />
+    <snack-bar />
     <router-view />
   </v-app>
 </template>
 
 <script>
-import Vue from 'vue';
-import AppBar from '@/components/ui/AppBar.vue';
-import SnackBar from '@/components/ui/SnackBar.vue';
+import Vue from "vue";
+import AppBar from "@/components/ui/AppBar.vue";
+import SnackBar from "@/components/ui/SnackBar.vue";
 
 export default Vue.extend({
   components: {
     AppBar,
     SnackBar,
-  }
+  },
 });
 </script>
 

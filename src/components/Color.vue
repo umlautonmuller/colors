@@ -69,7 +69,7 @@ export default Vue.extend({
     },
     locked: {
       type: Boolean,
-      default: false
+      default: false,
     },
     canClose: {
       type: Boolean,
@@ -95,14 +95,21 @@ export default Vue.extend({
       this.$emit("close", this.id);
     },
     async lock() {
-      const locked = await this.$store.dispatch("palette/toggleLockById", this.id);
+      const locked = await this.$store.dispatch(
+        "palette/toggleLockById",
+        this.id
+      );
       if (locked === true) {
         this.$emit("lock", this.id);
       }
     },
     copy() {
       window.navigator.clipboard.writeText(this.color);
-      this.$store.commit('snackbar/show', {message: "Copied!", color: this.color, timeout: 2000})
+      this.$store.commit("snackbar/show", {
+        message: "Copied!",
+        color: this.color,
+        timeout: 2000,
+      });
     },
     updateColor(newColor) {
       this.color = newColor;

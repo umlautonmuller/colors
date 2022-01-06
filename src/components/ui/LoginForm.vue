@@ -1,8 +1,9 @@
 <template>
   <section class="login-screen" v-if="show">
     <div id="login-form">
+      <span>Log In</span>
       <input type="text" v-model="username" placeholder="Email" />
-      <input type="text" v-model="password" placeholder="Password" />
+      <input type="password" v-model="password" placeholder="Password" />
       <button @click="submit" id="submit">Log In</button>
       <icon-button
         :color="'#303030'"
@@ -64,9 +65,9 @@ export default Vue.extend({
 section.login-screen {
   position: absolute;
   left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,17 +77,27 @@ section.login-screen {
     position: relative;
     height: 400px;
     width: 500px;
-    border-radius: 35px;
+    border-radius: 5px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+
+    > span {
+      text-decoration: none;
+      font-weight: bold;
+      color: #303030;
+      margin-top: 8%;
+    }
 
     > #close {
       position: absolute;
       top: 0%;
       right: 0%;
+      padding: 10px;
+      margin: 5px;
+      transform: scale(80%)
     }
 
     > input {
@@ -96,6 +107,7 @@ section.login-screen {
       border: 1px solid #cccccc;
       border-radius: 5px;
       padding-left: 10px;
+      margin-top: 8%;
 
       > :focus {
         border: 2px solid #303030;
@@ -113,6 +125,7 @@ section.login-screen {
       border-radius: 5px;
       text-transform: uppercase;
       transition: 0.3s ease;
+      margin: 13% 0;
     }
 
     > button#submit:hover {

@@ -1,8 +1,11 @@
 <template>
   <v-app-bar>
+    <v-login-form :show="showLogin" @close="showLogin = false" />
     <v-spacer></v-spacer>
     <div class="app-bar-actions">
-      <icon-button v-for="(action, index) in actions" :key="index"
+      <icon-button
+        v-for="(action, index) in actions"
+        :key="index"
         :color="action.color"
         :colorHover="action.colorHover"
         @click.native="action.callback"
@@ -12,12 +15,14 @@
     <v-spacer></v-spacer>
     <div class="app-bar-social-actions">
       <div v-if="!$store.state.user.logged">
-        <v-btn class="mr-4" color="primary" id="login" @click="showLogin = true">Log In</v-btn>
+        <v-btn class="mr-4" color="primary" id="login" @click="showLogin = true"
+          >Log In</v-btn
+        >
         <v-btn class="mr-4" outlined color="primary" id="signup">Sign Up</v-btn>
       </div>
       <div v-else>
-        <div>Olá, {{ $store.state.user.user.name }}</div>
-        <v-btn id="logout" @click="$store.commit('user/logout')">
+        <div class="mr-4">Olá, {{ $store.state.user.user.name }}</div>
+        <v-btn class="mr-4" id="logout" @click="$store.commit('user/logout')">
           Logout
         </v-btn>
       </div>
@@ -26,46 +31,57 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
+import LoginForm from "@/components/ui/LoginForm.vue";
 
 export default Vue.extend({
+  components: {
+    "v-login-form": LoginForm,
+  },
   data() {
     return {
+      showLogin: false,
       actions: [
         {
-          color: '#303030',
-          colorHover: '#CCCCCC',
+          color: "#303030",
+          colorHover: "#CCCCCC",
           callback: () => this.$store.dispatch("palette/randomize"),
-          icon: 'dice'
+          icon: "dice",
         },
         {
-          color: '#303030',
-          colorHover: '#CCCCCC',
+          color: "#303030",
+          colorHover: "#CCCCCC",
           callback: () => this.$store.dispatch("palette/increment"),
-          icon: 'plus'
+          icon: "plus",
         },
         {
-          color: '#303030',
-          colorHover: '#CCCCCC',
+          color: "#303030",
+          colorHover: "#CCCCCC",
           callback: () => this.$store.dispatch("palette/clear"),
-          icon: 'redo'
+          icon: "redo",
         },
         {
-          color: '#303030',
-          colorHover: '#CCCCCC',
+          color: "#303030",
+          colorHover: "#CCCCCC",
           callback: () => this.$store.dispatch("palette/unlockAll"),
-          icon: 'lock-open'
+          icon: "lock-open",
         },
-      ]
-    }
-  }
+      ],
+    };
+  },
 });
 </script>
 
 <style lang="scss">
-  .app-bar-social-actions {
-    position: absolute;
-    right: 0px;
+.app-bar-social-actions {
+  position: absolute;
+  right: 0px;
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
-  
+}
 </style>

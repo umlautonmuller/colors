@@ -9,7 +9,7 @@ const module = {
       { id: uuidv4(), locked: false },
       { id: uuidv4(), locked: false },
       { id: uuidv4(), locked: false },
-      { id: uuidv4(), locked: false }
+      { id: uuidv4(), locked: false },
     ],
     originals: [],
     size: 5,
@@ -24,7 +24,7 @@ const module = {
 
       state.colors.push({
         id: uuidv4(),
-        locked: false
+        locked: false,
       });
     },
     decrement(state) {
@@ -43,13 +43,13 @@ const module = {
       state.colors[index].locked = !state.colors[index].locked;
     },
     unlockAll(state) {
-      state.colors.forEach((color) => color.locked = false);
+      state.colors.forEach((color) => (color.locked = false));
     },
   },
   actions: {
     increment({ commit, state }) {
       if (state.size < 8) {
-        commit('increment');
+        commit("increment");
       }
     },
     clear({ commit, state }) {
@@ -95,12 +95,12 @@ const module = {
       const color = state.colors[position];
 
       commit("deleteColorAt", position);
-      commit("insertColorAt", { color: color, index: lockedCount - 1});
+      commit("insertColorAt", { color: color, index: lockedCount - 1 });
     },
     unlockAll({ commit }) {
       commit("unlockAll");
-    }
-  }
+    },
+  },
 };
 
 export default module;
