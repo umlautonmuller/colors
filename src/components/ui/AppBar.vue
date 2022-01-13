@@ -1,6 +1,7 @@
 <template>
   <v-app-bar>
-    <v-login-form :show="showLogin" @close="showLogin = false" />
+    <v-login-form ref="loginform"/>
+    <v-signup-form ref="signupform"/>
     <v-spacer></v-spacer>
     <div class="app-bar-actions">
       <icon-button
@@ -15,10 +16,10 @@
     <v-spacer></v-spacer>
     <div class="app-bar-social-actions">
       <div v-if="!$store.state.user.logged">
-        <v-btn class="mr-4" color="primary" id="login" @click="showLogin = true"
+        <v-btn class="mr-4" color="primary" id="login" @click="$refs.loginform.show = true"
           >Log In</v-btn
         >
-        <v-btn class="mr-4" outlined color="primary" id="signup">Sign Up</v-btn>
+        <v-btn class="mr-4" outlined color="primary" id="signup" @click="$refs.signupform.show = true">Sign Up</v-btn>
       </div>
       <div v-else>
         <div class="mr-4">Olá, {{ $store.state.user.user.name }}</div>
@@ -32,11 +33,13 @@
 
 <script>
 import Vue from "vue";
-import LoginForm from "@/components/ui/LoginForm.vue";
+import LoginForm from "@/components/LoginForm.vue";
+import SignupForm from "@/components/SignupForm.vue";
 
 export default Vue.extend({
   components: {
     "v-login-form": LoginForm,
+    "v-signup-form": SignupForm
   },
   data() {
     return {

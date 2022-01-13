@@ -27,11 +27,6 @@
       <icon-button
         :color="foregroundColor"
         :colorHover="backgroundColor"
-        icon="arrows-alt"
-      ></icon-button>
-      <icon-button
-        :color="foregroundColor"
-        :colorHover="backgroundColor"
         @click.native="copy"
         icon="copy"
       ></icon-button>
