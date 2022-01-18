@@ -11,6 +11,16 @@ const routes = [
     name: "Home",
     component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
   },
+  {
+    path: "/generate",
+    name: "Generator",
+    component: () => import(/* webpackChunkName: "generator" */ "../views/Generator.vue"),
+  },
+  {
+    path: "/palettes",
+    name: "Palettes",
+    component: () => import(/* webpackChunkName: "palettes" */ "../views/Palettes.vue"),
+  },
 ];
 
 const router = new VueRouter({
