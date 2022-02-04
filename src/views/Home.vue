@@ -4,8 +4,8 @@
       <h1 class="text-h2 font-weight-bold mb-5">The super original color palette generator!</h1>
       <p class="text-h6 font-weight-regular">Create, share and save color schemes in this brand-new website.</p>
       <div class="d-flex flex-column">
-        <v-btn dark class="mb-4" href="/generate" large>Generate!</v-btn>
-        <v-btn href="/palettes" large>Browse palettes</v-btn>
+        <v-btn dark class="mb-4" to="/generate" large>Generate!</v-btn>
+        <v-btn to="/palettes" large>Browse palettes</v-btn>
       </div>
     </div>
   </section>

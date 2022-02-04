@@ -3,7 +3,7 @@
     <v-login-form ref="loginform"/>
     <v-signup-form ref="signupform"/>
     <v-spacer></v-spacer>
-    <div class="app-bar-actions">
+    <div class="app-bar-actions" v-if="showActions">
       <icon-button
         v-for="(action, index) in actions"
         :key="index"
@@ -44,6 +44,7 @@ export default Vue.extend({
   data() {
     return {
       showLogin: false,
+      showActions: false,
       actions: [
         {
           color: "#303030",
@@ -71,6 +72,12 @@ export default Vue.extend({
         },
       ],
     };
+  },
+  watch: {
+    /* eslint-disable no-unused-vars */
+    $route (to, from) {
+      this.showActions = to.name === "Generator"
+    }
   },
 });
 </script>
